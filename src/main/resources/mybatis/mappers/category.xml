@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="category">
+
+
+	<!-- 기본 카테고리 추가 -->
+<!-- 	<insert id="insertCate" parameterType="com.javaex.vo.CategoryVo">
+	<![CDATA[	
+		insert into category
+        values ( seq_category_no.nextval, #{id}, #{cateName}, ${description}, SYSDATE )
+    	]]>
+	</insert> -->
+
+	<!-- 카테고리 추가, 키 -->
+	<insert id="insertCateKey" parameterType="com.javaex.vo.CategoryVo">
+		<selectKey keyProperty="cateNo" resultType="int" order="BEFORE">
+			select seq_category_no.nextval from dual
+		</selectKey>
+	<![CDATA[	
+		insert into category
+         	values ( #{cateNo }, #{id }, #{cateName }, #{description }, SYSDATE )
+    	]]>
+	</insert>
+
+	<!-- 카테고리 한개 가져오기 -->
+	<select id="getOneCate" parameterType="int" resultType="com.javaex.vo.CategoryVo">
+		<![CDATA[
+			select cateNo, id, cateName, description, regDate
+			from category
+			where cateNo = #{cateNo}
+		]]>
+
+	</select>
+
+	<!-- 카테고리 목록 전체 렌더링용 -->
+	<select id="getCateList" parameterType="String" resultType="com.javaex.vo.CategoryVo">
+		<![CDATA[
+			select c.cateNo, c.id, c.cateName, c.description, c.regDate, p.postnum
+			from category c,
+     			(select cateNo, count(postTitle) postNum
+     			 from post
+     			 group by cateNo) p
+			where c.cateNo = p.cateNo(+)
+			and c.id = #{id}
+			order by cateNo desc
+		]]>
+
+	</select>
+
+	<!-- 포스트 카테고리목록 출력용 -->
+	<select id="getCateName" parameterType="int" resultType="com.javaex.vo.CategoryVo">
+		<![CDATA[
+			select cateNo, cateName
+			from category
+			where id = #{id}
+		]]>
+
+	</select>
+
+	<!-- 카테고리 삭제 -->
+	<delete id="deleteCate" parameterType="int">
+		<![CDATA[
+			DELETE FROM (select  c.cateNo,
+			                     (select  count(case when p.cateNo = c.cateNo then 1 end)
+			                      from post p) pNum
+			 			 from category c)
+			 WHERE pNum = 0
+			 and cateNo = #{cateNo}
+		]]>
+	</delete>
+
+</mapper>

@@ -14,32 +14,33 @@
 <body>
 	<div id="wrap">
 
-		<!-- 개인블로그 해더 -->
+		<!-- 개인블로그 헤더 -->
 		<c:import url="/WEB-INF/views/includes/blog-header.jsp"></c:import>
 		
 		<div id="content" class="clearfix">
 			<div id="profilecate_area">
 				<div id="profile">
 					
+					<c:if test="${blogVo.logoFile == null}">
 					<!-- 기본이미지 -->
 					<img id="proImg" src="${pageContext.request.contextPath}/assets/images/spring-logo.jpg">
+					</c:if>
 					
+					<c:if test="${blogVo.logoFile != null}">
 					<!-- 사용자업로드 이미지 -->
-					<%-- <img id="proImg" src=""> --%>
+					<img id="proImg" src="${pageContext.request.contextPath}/upload/${blogVo.logoFile }">
+					</c:if>
 					
-					<div id="nick">정우성(hijava)님</div>
+					<div id="nick">${blogVo.userName}(${blogVo.id})님</div>
 				</div>
 				<div id="cate">
 					<div class="text-left">
 						<strong>카테고리</strong>
 					</div>
 					<ul id="cateList" class="text-left">
-						<li><a href="$}">카테고리5</a></li>
-						<li><a href="$}">카테고리4</a></li>
-						<li><a href="$}">카테고리3</a></li>
-						<li><a href="$}">카테고리2</a></li>
-						<li><a href="$}">카테고리1</a></li>
-						<li><a href="$}">미분류</a></li>
+						<c:forEach items="${cateList }" var="cList">
+							<li><a href="${pageContext.request.contextPath}/${blogVo.id}/?cateNo=${cList.cateNo }">${cList.cateName }</a></li>
+						</c:forEach>
 						
 					</ul>
 				</div>
@@ -48,10 +49,10 @@
 			
 			<div id="post_area">
 				
-				<div id="postBox" class="clearfix">
+		<%-- 	<div id="postBox" class="clearfix">
 						<div id="postTitle" class="text-left"><strong>08.페이징</strong></div>
 						<div id="postDate" class="text-left"><strong>2020/07/23</strong></div>
-						<div id="postNick">정우성(hijava)님</div>
+						<div id="postNick">${blogVo.userName}(${blogVo.id})님</div>
 				</div>
 				<!-- //postBox -->
 			
@@ -62,18 +63,24 @@
 					정직·감봉 기타 불리한 처분을 받지 아니한다.
 				</div>
 				<!-- //post -->
-				
+				 --%>
+				 
+				 
 				<!-- 글이 없는 경우 -->
-				<!-- 
-				<div id="postBox" class="clearfix">
-							<div id="postTitle" class="text-left"><strong>등록된 글이 없습니다.</strong></div>
-							<div id="postDate" class="text-left"><strong></strong></div>
-							<div id="postNick"></div>
-				</div>
+				<c:if test="${postList == null }">
+					<div id="postBox" class="clearfix">
+								<div id="postTitle" class="text-left"><strong>등록된 글이 없습니다.</strong></div>
+								<div id="postDate" class="text-left"><strong></strong></div>
+								<div id="postNick"></div>
+					</div>
+				</c:if>
 			    
 				<div id="post" >
 				</div>
-				-->
+				
+				
+				
+				
 				
 				<div id="list">
 					<div id="listTitle" class="text-left"><strong>카테고리의 글</strong></div>
@@ -83,27 +90,13 @@
 							<col style="width: 20%;">
 						</colgroup>
 						
+						<c:forEach items="${postList }" var="pList">
 						<tr>
-							<td class="text-left"><a href="">08.페이징</a></td>
-							<td class="text-right">2020/07/23</td>
-						</tr>
-						<tr>
-							<td class="text-left"><a href="">07.첨부파일_MultipartResolver</a></td>
-							<td class="text-right">2020/07/23</td>
-						</tr>
-						<tr>
-							<td class="text-left"><a href="">06.jquery_ajax</a></td>
-							<td class="text-right">2020/07/23</td>
-						</tr>
-						<tr>
-							<td class="text-left"><a href="">05.javaScript</a></td>
-							<td class="text-right">2020/07/23</td>
-						</tr>
-						<tr>
-							<td class="text-left"><a href="">04.spring_어플리케이션_아키텍쳐</a></td>
-							<td class="text-right">2020/07/23</td>
+							<td class="text-left"><a href="">${pList.postTitle}</a></td>
+							<td class="text-right">${pList.regDate}</td>
 						</tr>
 						
+						</c:forEach>
 						
 					</table>
 				</div>

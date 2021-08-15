@@ -43,7 +43,6 @@
 					<tr>
 						<td><label for="txtUserName">이름</label></td>
 						<td><input id="txtUserName" type="text" name="userName" value=""></td>
-						<td></td>
 					</tr>
 					<tr>
 						<td><span>약관동의</span></td>
