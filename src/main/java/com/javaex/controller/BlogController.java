@@ -41,10 +41,17 @@ public class BlogController {
 		//카테고리 눌렀을때 글 제목 목록 출력
 		int cateNo = blogVo.getCateNo();
 		List<PostVo> postList = blogService.getPost(id, cateNo);
-
+		
+		//최근 포스트 출력
+		PostVo latestPost = blogService.getLatestPost(id, cateNo);
+		
+		
+		
 		model.addAttribute("blogVo", getBlogVo);
 		model.addAttribute("cateList", cateList);
 		model.addAttribute("postList", postList);
+		model.addAttribute("latestPost", latestPost);
+		
 
 		return "/blog/blog-main";
 	}

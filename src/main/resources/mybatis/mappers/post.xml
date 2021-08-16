@@ -3,27 +3,45 @@
 
 <mapper namespace="post">
 
-<select id="getPostList" parameterType="Map" resultType="com.javaex.vo.PostVo">
-	<![CDATA[
-		select p.postTitle, p.postContent, to_char(p.regDate, 'yyyy/mm/dd') regDate
-		from post p, category c, blog b, users u
-		where p.cateNo = c.cateNo
-		and c.id = b.id
-		and b.id = u.id
-		and u.id = #{id}
-		and c.cateNo = #{cateNo}
+	<!-- 포스트 목록 출력 -->
+	<select id="getPostList" parameterType="Map" resultType="com.javaex.vo.PostVo">
+		<![CDATA[
+			select p.postTitle, to_char(p.regDate, 'yyyy/mm/dd') regDate, p.postNo, c.cateNo
+			from post p, category c, blog b, users u
+			where p.cateNo = c.cateNo
+			and c.id = b.id
+			and b.id = u.id
+			and u.id = #{id}
+			and c.cateNo = #{cateNo}
+			order by p.postNo desc
+		
+		]]>
 	
-	]]>
+	</select>
 
-</select>
-
-<insert id="insertPost" parameterType="com.javaex.vo.PostVo">
-	<![CDATA[
-		insert into post
-		values(SEQ_POST_NO.nextval, #{cateNo}, #{postTitle}, #{postContent}, sysdate)
-	]]>
-
-</insert>
+	<!-- 최근 포스트 출력 -->
+	<select id="getLatestPost" parameterType="Map" resultType="com.javaex.vo.PostVo">
+		<![CDATA[
+			select postTitle, postContent, to_char(regDate, 'yyyy/mm/dd') regDate
+			from post
+			where postNo = (select max(postNo)
+                			from post p, category c, blog b, users u
+			                where p.cateNo = c.cateNo
+			                and c.id = b.id
+			                and b.id = u.id
+			                and u.id = #{id}
+			                and c.cateNo = #{cateNo})
+		]]>
+	
+	</select>
+	
+	<insert id="insertPost" parameterType="com.javaex.vo.PostVo">
+		<![CDATA[
+			insert into post
+			values(SEQ_POST_NO.nextval, #{cateNo}, #{postTitle}, #{postContent}, sysdate)
+		]]>
+	
+	</insert>
 
 
 </mapper>

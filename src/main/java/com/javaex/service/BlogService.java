@@ -105,4 +105,12 @@ public class BlogService {
 		return postDao.getPost(id, cateNo);
 	}
 	
+	//최근 포스트 출력
+	public PostVo getLatestPost(String id, int cateNo) {
+		System.out.println("[BlogService.getLatestPost()]");
+		
+		return postDao.getLatestPost(id, cateNo);
+	}
+	
+	
 }
