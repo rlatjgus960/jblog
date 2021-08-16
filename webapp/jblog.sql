@@ -1,194 +1,224 @@
 --------------------------------------------------------
---  ������ ������ - ������-8��-16-2021   
+--  파일이 생성됨 - 월요일-8월-16-2021   
 --------------------------------------------------------
-drop table post;
-drop table category;
-drop table comments;
-drop table blog;
-drop table users;
+--------------------------------------------------------
+--  DDL for Sequence SEQ_CATEGORY_NO
+--------------------------------------------------------
 
+   CREATE SEQUENCE  "JBLOG"."SEQ_CATEGORY_NO"  MINVALUE 1 MAXVALUE 9999999999999999999999999999 INCREMENT BY 1 START WITH 21 NOCACHE  NOORDER  NOCYCLE ;
+--------------------------------------------------------
+--  DDL for Sequence SEQ_COMMENTS_NO
+--------------------------------------------------------
 
-----------------------------------------------------
+   CREATE SEQUENCE  "JBLOG"."SEQ_COMMENTS_NO"  MINVALUE 1 MAXVALUE 9999999999999999999999999999 INCREMENT BY 1 START WITH 1 NOCACHE  NOORDER  NOCYCLE ;
+--------------------------------------------------------
+--  DDL for Sequence SEQ_POST_NO
+--------------------------------------------------------
 
+   CREATE SEQUENCE  "JBLOG"."SEQ_POST_NO"  MINVALUE 1 MAXVALUE 9999999999999999999999999999 INCREMENT BY 1 START WITH 21 NOCACHE  NOORDER  NOCYCLE ;
+--------------------------------------------------------
+--  DDL for Sequence SEQ_USERS_NO
+--------------------------------------------------------
 
-create table users (
-    userNo number not null,
-    id varchar2(250) not null UNIQUE,
-    userName varchar2(100) not null,
-    password varchar2(50) not null,
-    joinDate date,
-    PRIMARY key(userNo)
-);
+   CREATE SEQUENCE  "JBLOG"."SEQ_USERS_NO"  MINVALUE 1 MAXVALUE 9999999999999999999999999999 INCREMENT BY 1 START WITH 36 NOCACHE  NOORDER  NOCYCLE ;
+--------------------------------------------------------
+--  DDL for Table BLOG
+--------------------------------------------------------
 
-insert into users values (seq_users_no.nextval, 'hijava', '����', 12345678, sysdate);
+  CREATE TABLE "JBLOG"."BLOG" 
+   (	"ID" VARCHAR2(50 BYTE), 
+	"BLOGTITLE" VARCHAR2(200 BYTE), 
+	"LOGOFILE" VARCHAR2(200 BYTE)
+   ) SEGMENT CREATION IMMEDIATE 
+  PCTFREE 10 PCTUSED 40 INITRANS 1 MAXTRANS 255 NOCOMPRESS LOGGING
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1 BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" ;
+--------------------------------------------------------
+--  DDL for Table CATEGORY
+--------------------------------------------------------
 
-select userNo, id, userName, password, joinDate
-from users;
+  CREATE TABLE "JBLOG"."CATEGORY" 
+   (	"CATENO" NUMBER, 
+	"ID" VARCHAR2(50 BYTE), 
+	"CATENAME" VARCHAR2(200 BYTE), 
+	"DESCRIPTION" VARCHAR2(500 BYTE), 
+	"REGDATE" VARCHAR2(500 BYTE)
+   ) SEGMENT CREATION IMMEDIATE 
+  PCTFREE 10 PCTUSED 40 INITRANS 1 MAXTRANS 255 NOCOMPRESS LOGGING
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1 BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" ;
+--------------------------------------------------------
+--  DDL for Table COMMENTS
+--------------------------------------------------------
 
-delete from users
-where id = 'hijava';
+  CREATE TABLE "JBLOG"."COMMENTS" 
+   (	"CMTNO" NUMBER, 
+	"POSTNO" NUMBER, 
+	"USERNO" NUMBER, 
+	"CMTCONTENT" VARCHAR2(1000 BYTE), 
+	"REGDATE" DATE
+   ) SEGMENT CREATION IMMEDIATE 
+  PCTFREE 10 PCTUSED 40 INITRANS 1 MAXTRANS 255 NOCOMPRESS LOGGING
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1 BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" ;
+--------------------------------------------------------
+--  DDL for Table POST
+--------------------------------------------------------
 
-commit;
+  CREATE TABLE "JBLOG"."POST" 
+   (	"POSTNO" NUMBER, 
+	"CATENO" NUMBER, 
+	"POSTTITLE" VARCHAR2(300 BYTE), 
+	"POSTCONTENT" VARCHAR2(4000 BYTE), 
+	"REGDATE" DATE
+   ) SEGMENT CREATION IMMEDIATE 
+  PCTFREE 10 PCTUSED 40 INITRANS 1 MAXTRANS 255 NOCOMPRESS LOGGING
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1 BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" ;
+--------------------------------------------------------
+--  DDL for Table USERS
+--------------------------------------------------------
 
-----------------------------------------------------
+  CREATE TABLE "JBLOG"."USERS" 
+   (	"USERNO" NUMBER, 
+	"ID" VARCHAR2(250 BYTE), 
+	"USERNAME" VARCHAR2(100 BYTE), 
+	"PASSWORD" VARCHAR2(50 BYTE), 
+	"JOINDATE" DATE
+   ) SEGMENT CREATION IMMEDIATE 
+  PCTFREE 10 PCTUSED 40 INITRANS 1 MAXTRANS 255 NOCOMPRESS LOGGING
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1 BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" ;
+REM INSERTING into JBLOG.BLOG
+SET DEFINE OFF;
+Insert into JBLOG.BLOG (ID,BLOGTITLE,LOGOFILE) values ('aaaa','aaaa의 블로그입니다!','1629067160103052acf72-d71a-47f6-928f-f51074f15a93.jpg');
+Insert into JBLOG.BLOG (ID,BLOGTITLE,LOGOFILE) values ('1234','1234의 블로그입니다.','16287396678216f380ba8-c4c1-4998-af81-a089df6287e7.jpg');
+Insert into JBLOG.BLOG (ID,BLOGTITLE,LOGOFILE) values ('123123','1234의 블로그입니다.',null);
+Insert into JBLOG.BLOG (ID,BLOGTITLE,LOGOFILE) values ('3333','1234의 블로그입니다.',null);
+Insert into JBLOG.BLOG (ID,BLOGTITLE,LOGOFILE) values ('dd','1234의 블로그입니다.',null);
+Insert into JBLOG.BLOG (ID,BLOGTITLE,LOGOFILE) values ('2222','1234의 블로그입니다.',null);
+REM INSERTING into JBLOG.CATEGORY
+SET DEFINE OFF;
+Insert into JBLOG.CATEGORY (CATENO,ID,CATENAME,DESCRIPTION,REGDATE) values (1,'1234','123123132','12312123','21/08/13');
+Insert into JBLOG.CATEGORY (CATENO,ID,CATENAME,DESCRIPTION,REGDATE) values (18,'aaaa','미분류','기본으로 생성되는 카테고리입니다.','21/08/16');
+Insert into JBLOG.CATEGORY (CATENO,ID,CATENAME,DESCRIPTION,REGDATE) values (3,'1234','자바 프로그래밍','객체지향어쩌구 ','21/08/13');
+Insert into JBLOG.CATEGORY (CATENO,ID,CATENAME,DESCRIPTION,REGDATE) values (4,'1234','오라클','sql','21/08/14');
+Insert into JBLOG.CATEGORY (CATENO,ID,CATENAME,DESCRIPTION,REGDATE) values (7,'1234','ss','ss','21/08/14');
+Insert into JBLOG.CATEGORY (CATENO,ID,CATENAME,DESCRIPTION,REGDATE) values (14,'1234','dfdd','ddd','21/08/14');
+Insert into JBLOG.CATEGORY (CATENO,ID,CATENAME,DESCRIPTION,REGDATE) values (20,'2222','123123','123123','21/08/16');
+Insert into JBLOG.CATEGORY (CATENO,ID,CATENAME,DESCRIPTION,REGDATE) values (17,'1234','ddddddd','dddddddddddddddd','21/08/14');
+REM INSERTING into JBLOG.COMMENTS
+SET DEFINE OFF;
+REM INSERTING into JBLOG.POST
+SET DEFINE OFF;
+Insert into JBLOG.POST (POSTNO,CATENO,POSTTITLE,POSTCONTENT,REGDATE) values (1,1,'포스트 제목','포스트 내용',to_date('21/08/14','RR/MM/DD'));
+Insert into JBLOG.POST (POSTNO,CATENO,POSTTITLE,POSTCONTENT,REGDATE) values (2,3,'포스트작성','테스트',to_date('21/08/14','RR/MM/DD'));
+Insert into JBLOG.POST (POSTNO,CATENO,POSTTITLE,POSTCONTENT,REGDATE) values (5,4,'오라클','어우',to_date('21/08/14','RR/MM/DD'));
+Insert into JBLOG.POST (POSTNO,CATENO,POSTTITLE,POSTCONTENT,REGDATE) values (6,17,'kdkdkdkk','dsd',to_date('21/08/14','RR/MM/DD'));
+Insert into JBLOG.POST (POSTNO,CATENO,POSTTITLE,POSTCONTENT,REGDATE) values (11,1,'하....','인생.. 쉽지않네... ㅋㅎㅋㅋㅎ ',to_date('21/08/14','RR/MM/DD'));
+Insert into JBLOG.POST (POSTNO,CATENO,POSTTITLE,POSTCONTENT,REGDATE) values (15,1,'ㅇㅇㅇㅇㅇ','ㅇㅇㅇㅇㅇ',to_date('21/08/14','RR/MM/DD'));
+Insert into JBLOG.POST (POSTNO,CATENO,POSTTITLE,POSTCONTENT,REGDATE) values (16,1,'ddd','ddddd',to_date('21/08/14','RR/MM/DD'));
+Insert into JBLOG.POST (POSTNO,CATENO,POSTTITLE,POSTCONTENT,REGDATE) values (17,1,'ㄹㄹㄹㄹ','ㄹㄹㄹㄹㄹ',to_date('21/08/16','RR/MM/DD'));
+Insert into JBLOG.POST (POSTNO,CATENO,POSTTITLE,POSTCONTENT,REGDATE) values (18,18,'미분류 게시글','입니다',to_date('21/08/16','RR/MM/DD'));
+Insert into JBLOG.POST (POSTNO,CATENO,POSTTITLE,POSTCONTENT,REGDATE) values (19,20,'gfhg','22',to_date('21/08/16','RR/MM/DD'));
+Insert into JBLOG.POST (POSTNO,CATENO,POSTTITLE,POSTCONTENT,REGDATE) values (20,1,'최신글','떠라',to_date('21/08/16','RR/MM/DD'));
+REM INSERTING into JBLOG.USERS
+SET DEFINE OFF;
+Insert into JBLOG.USERS (USERNO,ID,USERNAME,PASSWORD,JOINDATE) values (31,'aaaa','aaaa','1234',to_date('21/08/16','RR/MM/DD'));
+Insert into JBLOG.USERS (USERNO,ID,USERNAME,PASSWORD,JOINDATE) values (24,'1234','1234','1234',to_date('21/08/11','RR/MM/DD'));
+Insert into JBLOG.USERS (USERNO,ID,USERNAME,PASSWORD,JOINDATE) values (33,'123123','1234','1234',to_date('21/08/16','RR/MM/DD'));
+Insert into JBLOG.USERS (USERNO,ID,USERNAME,PASSWORD,JOINDATE) values (34,'3333','1234','1234',to_date('21/08/16','RR/MM/DD'));
+Insert into JBLOG.USERS (USERNO,ID,USERNAME,PASSWORD,JOINDATE) values (32,'dd','1234','1234',to_date('21/08/16','RR/MM/DD'));
+Insert into JBLOG.USERS (USERNO,ID,USERNAME,PASSWORD,JOINDATE) values (35,'2222','1234','1234',to_date('21/08/16','RR/MM/DD'));
+--------------------------------------------------------
+--  Constraints for Table COMMENTS
+--------------------------------------------------------
 
-create table blog (
-    id varchar2(50),
-    blogTitle varchar2(200) not null,
-    logoFile varchar2(200),
-    primary key (id),
-    CONSTRAINT blog_id FOREIGN KEY(id)
-    REFERENCES users(id)
-);
+  ALTER TABLE "JBLOG"."COMMENTS" ADD PRIMARY KEY ("CMTNO")
+  USING INDEX PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1 BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM"  ENABLE;
+  ALTER TABLE "JBLOG"."COMMENTS" MODIFY ("REGDATE" NOT NULL ENABLE);
+  ALTER TABLE "JBLOG"."COMMENTS" MODIFY ("CMTCONTENT" NOT NULL ENABLE);
+--------------------------------------------------------
+--  Constraints for Table CATEGORY
+--------------------------------------------------------
 
-select *
-from blog b, users u
-where b.id = u.id
-and b.id = '1234';
+  ALTER TABLE "JBLOG"."CATEGORY" ADD PRIMARY KEY ("CATENO")
+  USING INDEX PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1 BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM"  ENABLE;
+  ALTER TABLE "JBLOG"."CATEGORY" MODIFY ("REGDATE" NOT NULL ENABLE);
+  ALTER TABLE "JBLOG"."CATEGORY" MODIFY ("CATENAME" NOT NULL ENABLE);
+--------------------------------------------------------
+--  Constraints for Table POST
+--------------------------------------------------------
 
-----------------------------------------------------
+  ALTER TABLE "JBLOG"."POST" ADD PRIMARY KEY ("POSTNO")
+  USING INDEX PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1 BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM"  ENABLE;
+  ALTER TABLE "JBLOG"."POST" MODIFY ("REGDATE" NOT NULL ENABLE);
+  ALTER TABLE "JBLOG"."POST" MODIFY ("POSTTITLE" NOT NULL ENABLE);
+--------------------------------------------------------
+--  Constraints for Table USERS
+--------------------------------------------------------
 
+  ALTER TABLE "JBLOG"."USERS" ADD UNIQUE ("ID")
+  USING INDEX PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1 BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM"  ENABLE;
+  ALTER TABLE "JBLOG"."USERS" ADD PRIMARY KEY ("USERNO")
+  USING INDEX PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1 BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM"  ENABLE;
+  ALTER TABLE "JBLOG"."USERS" MODIFY ("PASSWORD" NOT NULL ENABLE);
+  ALTER TABLE "JBLOG"."USERS" MODIFY ("USERNAME" NOT NULL ENABLE);
+  ALTER TABLE "JBLOG"."USERS" MODIFY ("ID" NOT NULL ENABLE);
+  ALTER TABLE "JBLOG"."USERS" MODIFY ("USERNO" NOT NULL ENABLE);
+--------------------------------------------------------
+--  Constraints for Table BLOG
+--------------------------------------------------------
 
-create table category (
-    cateNo number,
-    id varchar2(50),
-    cateName varchar2(200) not null,
-    description varchar2(500),
-    regDate varchar2(500) not null,
-    primary key (cateNo),
-    CONSTRAINT category_id FOREIGN KEY(id)
-    REFERENCES blog(id)
-);
+  ALTER TABLE "JBLOG"."BLOG" ADD PRIMARY KEY ("ID")
+  USING INDEX PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1 BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM"  ENABLE;
+  ALTER TABLE "JBLOG"."BLOG" MODIFY ("BLOGTITLE" NOT NULL ENABLE);
+--------------------------------------------------------
+--  Ref Constraints for Table BLOG
+--------------------------------------------------------
 
-select *
-from category;
+  ALTER TABLE "JBLOG"."BLOG" ADD CONSTRAINT "BLOG_ID" FOREIGN KEY ("ID")
+	  REFERENCES "JBLOG"."USERS" ("ID") ENABLE;
+--------------------------------------------------------
+--  Ref Constraints for Table CATEGORY
+--------------------------------------------------------
 
-select cateNo, id, cateName, description, regDate
-from category
-where cateNo=1;
+  ALTER TABLE "JBLOG"."CATEGORY" ADD CONSTRAINT "CATEGORY_ID" FOREIGN KEY ("ID")
+	  REFERENCES "JBLOG"."BLOG" ("ID") ENABLE;
+--------------------------------------------------------
+--  Ref Constraints for Table COMMENTS
+--------------------------------------------------------
 
-insert into category
-values ( seq_category_no.nextval, 'aaaa', '�̺з�', '�⺻���� �����Ǵ� ī�װ����Դϴ�.', SYSDATE );
+  ALTER TABLE "JBLOG"."COMMENTS" ADD CONSTRAINT "COMMENTS_POSTNO" FOREIGN KEY ("POSTNO")
+	  REFERENCES "JBLOG"."POST" ("POSTNO") ENABLE;
+  ALTER TABLE "JBLOG"."COMMENTS" ADD CONSTRAINT "COMMENTS_USERNO" FOREIGN KEY ("USERNO")
+	  REFERENCES "JBLOG"."USERS" ("USERNO") ENABLE;
+--------------------------------------------------------
+--  Ref Constraints for Table POST
+--------------------------------------------------------
 
-
-----------------------------------------------------
-
-
-
-create table post (
-    postNo number,
-    cateNo number,
-    postTitle varchar2(300) not null,
-    postContent varchar2(4000),
-    regDate date not null,
-    primary key (postNo),
-    CONSTRAINT category_no FOREIGN KEY(cateNo)
-    REFERENCES category(cateNo)
-);
-
-select p.postTitle, p.postContent, to_char(p.regDate, 'yyyy/mm/dd') regDate
-from post p, category c, blog b, users u
-where p.cateNo = c.cateNo
-and c.id = b.id
-and b.id = u.id
-and u.id = '1234'
-and c.cateNo = 3;
-
-
-
-select c.cateName
-from post p, category c
-where p.cateNo = c.cateNo
-and c.id = '1234';
-
-select *
-from post;
-
-insert into post
-values(SEQ_POST_NO.nextval, 1, '����Ʈ ����', '����Ʈ ����', sysdate);
-
-
-select c.cateNo, c.id, c.cateName, c.description, c.regDate, p.postnum
-from category c,
-     (select cateNo, count(postTitle) postNum
-      from post
-      group by cateNo) p
-where c.cateNo =  p.cateNo(+);
-
-SELECT t.postNum,
-COUNT(CASE WHEN t.postNum IS NULL THEN 0 ELSE t.postNum END) AS CNT 
-FROM (select c.cateNo, c.id, c.cateName, c.description, c.regDate, p.postnum
-      from category c,
-           (select cateNo, count(postTitle) postNum
-            from post
-            group by cateNo) p
-      where c.cateNo =  p.cateNo(+)) t
-GROUP BY t.postNum;
-
-
-
-
-select c.cateNo, c.id, c.cateName, c.description, c.regDate, p.postnum
-from category c,
-     (select cateNo, COUNT(CASE WHEN cateNo IS NULL THEN 0 ELSE cateNo END) AS postNum
-      from post
-      group by cateNo) p
-where c.cateNo =  p.cateNo(+);
-
-
-
-
-
-DELETE FROM (select  c.cateNo,
-			         (select  count(case when p.cateNo = c.cateNo then 1 end)
-			          from post p) pNum
-			 from category c)
-WHERE pNum = 0
-and cateNo = 16;
-
-
-rollback;
-
-commit;
-
-----------------------------------------------------
-
-
-create table comments (
-    cmtNo number,
-    postNo number,
-    userNo number,
-    cmtContent varchar2(1000) not null,
-    regDate date not null,
-    PRIMARY KEY (cmtNo),
-    CONSTRAINT comments_postNo FOREIGN KEY(postNo)
-    REFERENCES post(postNo),
-    CONSTRAINT comments_userNo FOREIGN KEY(userNo)
-    REFERENCES users(userNo)
-);
-
-
-
-----------------------------------------------------
-
-
-CREATE SEQUENCE seq_users_no
-INCREMENT BY 1
-START WITH 1
-NOCACHE ;
-
-CREATE SEQUENCE seq_category_no
-INCREMENT BY 1
-START WITH 1
-NOCACHE ;
-
-CREATE SEQUENCE seq_post_no
-INCREMENT BY 1
-START WITH 1
-NOCACHE ;
-
-CREATE SEQUENCE seq_comments_no
-INCREMENT BY 1
-START WITH 1
-NOCACHE ;
-
+  ALTER TABLE "JBLOG"."POST" ADD CONSTRAINT "CATEGORY_NO" FOREIGN KEY ("CATENO")
+	  REFERENCES "JBLOG"."CATEGORY" ("CATENO") ENABLE;
