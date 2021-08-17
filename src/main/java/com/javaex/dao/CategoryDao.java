@@ -14,6 +14,7 @@ public class CategoryDao {
 	
 	@Autowired private SqlSession sqlSession;
 	
+	//기본 카테고리 추가
 	public int insertCate(CategoryVo categoryVo) {
 		System.out.println("[CategoryDao.insertCate()]");
 		
@@ -56,5 +57,12 @@ public class CategoryDao {
 		System.out.println("[CategoryDao.getCategory()]");
 		
 		return sqlSession.delete("category.deleteCate", cateNo);
+	}
+	
+	//최근 카테고리번호 가져오기
+	public CategoryVo getLatestCate(String id) {
+		System.out.println("[CategoryDao.getLatestCate()]");
+		
+		return sqlSession.selectOne("category.getLatestCate",id);
 	}
 }

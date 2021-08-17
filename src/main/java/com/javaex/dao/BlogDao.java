@@ -25,7 +25,11 @@ public class BlogDao {
 		
 		System.out.println("[BlogDao.getBlog()]");
 		
-		return sqlSession.selectOne("blog.selectBlog",id);
+		BlogVo blogVo = sqlSession.selectOne("blog.selectBlog",id);
+		
+		System.out.println(blogVo);
+		
+		return blogVo;
 	}
 	
 	public int updateBlogBasic(String id, String saveName, String blogTitle) {

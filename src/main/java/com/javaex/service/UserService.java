@@ -35,14 +35,15 @@ public class UserService {
 		int bCount = blogDao.insertBlog(blogVo);
 		
 		// 기본 카테고리 추가
-		/*
-		 * CategoryDao categoryDao = new CategoryDao(); String title = "미분류"; String
-		 * desc = "기본으로 만들어지는 카테고리입니다.";
-		 * 
-		 * CategoryVo categoryVo = new CategoryVo(id, title, desc);
-		 * 
-		 * categoryDao.insertCate(categoryVo);
-		 */
+		
+		 CategoryDao categoryDao = new CategoryDao(); 
+		 String title = "미분류"; 
+		 String	desc = "기본으로 만들어지는 카테고리입니다.";
+		 
+		 CategoryVo categoryVo = new CategoryVo(id, title, desc);
+		 
+		 categoryDao.insertCate(categoryVo);
+		 
 
 		return uCount;
 	}

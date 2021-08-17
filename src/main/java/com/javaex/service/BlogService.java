@@ -15,6 +15,7 @@ import com.javaex.dao.BlogDao;
 import com.javaex.dao.CategoryDao;
 import com.javaex.dao.PostDao;
 import com.javaex.vo.BlogVo;
+import com.javaex.vo.CategoryVo;
 import com.javaex.vo.PostVo;
 
 @Service
@@ -22,10 +23,10 @@ public class BlogService {
 
 	@Autowired
 	private BlogDao blogDao;
-	
+
 	@Autowired
 	private CategoryDao categoryDao;
-	
+
 	@Autowired
 	private PostDao postDao;
 
@@ -38,8 +39,10 @@ public class BlogService {
 
 	public BlogVo getBlog(String id) {
 		System.out.println("[BlogService.getBlog()]");
+		BlogVo blogVo = blogDao.getBlog(id);
 
-		return blogDao.getBlog(id);
+		System.out.println(blogVo);
+		return blogVo;
 	}
 
 	// 기본 수정
@@ -96,21 +99,25 @@ public class BlogService {
 		}
 
 	}
-	
-	
-	//메인페이지 포스트 출력
+
+	// 메인페이지 포스트 출력
 	public List<PostVo> getPost(String id, int cateNo) {
 		System.out.println("[BlogService.getPost()]");
-		
+
 		return postDao.getPost(id, cateNo);
 	}
-	
-	//최근 포스트 출력
+
+	// 최근 포스트 출력
 	public PostVo getLatestPost(String id, int cateNo) {
 		System.out.println("[BlogService.getLatestPost()]");
-		
+
 		return postDao.getLatestPost(id, cateNo);
 	}
-	
-	
+
+	// 최근 카테고리 가져오기
+	public CategoryVo getLatestCate(String id) {
+		System.out.println("[BlogService.getLatestCate()]");
+		return categoryDao.getLatestCate(id);
+	}
+
 }
